@@ -1,4 +1,19 @@
-{
+{ 
+  "r2egym": {
+    "hf_hub_url": "R2E-Gym/R2EGym-SFT-Trajectories",
+    "formatting": "sharegpt",
+    "num_samples": 3231,
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "system_tag": "system",
+      "user_tag": "user",
+      "assistant_tag": "assistant"
+    }
+  },
   "identity": {
     "file_name": "identity.json"
   },
