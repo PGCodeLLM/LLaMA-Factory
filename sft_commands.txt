@@ -1,0 +1,33 @@
+docker run --runtime nvidia --gpus all -v ~/.cache/huggingface:/root/.cache/huggingface --env "HUGGING_FACE_HUB_TOKEN=123" -p 8000:8000 --ipc=host -v /shared_workspace/alex/sft-test/LLaMA-Factory/saves/qwen2_5coder-7b/full/sft:/Qwen2.5-Coder-7B vllm/vllm-openai:latest --model /Qwen2.5-Coder-7B --dtype bfloat16 --served-model-name Qwen2.5-Coder-7B_sft --host 0.0.0.0 --tensor-parallel-size 4 --data-parallel-size 2
+
+uv run python src/r2egym/agenthub/run/edit.py runagent_multiple \
+  --traj_dir "./traj" \
+  --max_workers 54 \
+  --start_idx 0 \
+  --k 3000 \
+  --dataset "R2E-Gym/SWE-Bench-Verified" \
+  --split "test" \
+  --llm_name 'hosted_vllm/Qwen2.5-Coder-7B' \
+  --llm_base_urls 'http://lux-2-cyber-05:8000/v1'
+  --use_fn_calling False \
+  --exp_name qwen25sfteval \
+  --temperature 0 \
+  --max_steps 40
+
+docker run --runtime nvidia --gpus all -v ~/.cache/huggingface:/root/.cache/huggingface --env "HUGGING_FACE_HUB_TOKEN=123" -p 8000:8000 --ipc=host -v /home/original_models/Qwen2.5-Coder-7B:/Qwen2.5-Coder-7B vllm/vllm-openai:latest --model /Qwen2.5-Coder-7B --dtype bfloat16 --served-model-name Qwen2.5-Coder-7B --host 0.0.0.0 --tensor-parallel-size 4 --data-parallel-size 2
+
+uv run python agenthub/run/edit.py runagent_multiple \
+  --traj_dir "./traj" \
+  --max_workers 54 \
+  --start_idx 0 \
+  --k 3000 \
+  --dataset "R2E-Gym/SWE-Bench-Verified" \
+  --split "test" \
+  --llm_name 'hosted_vllm/Qwen2.5-Coder-7B' \
+  --llm_base_urls 'http://lux-2-cyber-06:8000/v1'
+  --use_fn_calling False \
+  --exp_name qwen25baseeval \
+  --temperature 0 \
+  --max_steps 40
+
+/shared_workspace/alex/sft-test/LLaMA-Factory/saves/qwen2_5coder-7b/full/sft

@@ -1,0 +1,2 @@
+uv run --prerelease=allow --active llamafactory-cli train examples/train_full/qwen3_8b_deepseek_distill_sft.yaml
+uv run --prerelease=allow --active llamafactory-cli train examples/train_full/qwen3_8b_deepseek_distill_sft_nothink.yaml

@@ -42,7 +42,7 @@ def get_console_scripts() -> list[str]:
 
 
 extra_require = {
-    "torch": ["torch>=2.0.0", "torchvision>=0.15.0"],
+    "torch": ["torch>=2.0.0"],
     "torch-npu": ["torch==2.4.0", "torch-npu==2.4.0.post2", "decorator"],
     "metrics": ["nltk", "jieba", "rouge-chinese"],
     "deepspeed": ["deepspeed>=0.10.0,<=0.16.9"],
@@ -52,7 +52,7 @@ extra_require = {
     "eetq": ["eetq"],
     "gptq": ["optimum>=1.24.0", "gptqmodel>=2.0.0"],
     "aqlm": ["aqlm[gpu]>=1.1.0"],
-    "vllm": ["vllm>=0.4.3,<=0.8.6"],
+    "vllm": ["vllm>=0.4.3,<=0.9.1"],
     "sglang": ["sglang[srt]>=0.4.5", "transformers==4.51.1"],
     "galore": ["galore-torch"],
     "apollo": ["apollo-torch"],
@@ -60,7 +60,6 @@ extra_require = {
     "adam-mini": ["adam-mini"],
     "minicpm_v": [
         "soundfile",
-        "torchvision",
         "torchaudio",
         "vector_quantize_pytorch",
         "vocos",
