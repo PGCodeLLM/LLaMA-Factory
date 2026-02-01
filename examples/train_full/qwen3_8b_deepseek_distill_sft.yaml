@@ -9,7 +9,7 @@ finetuning_type: full
 deepspeed: examples/deepspeed/ds_z3_offload_config.json
 
 ### dataset
-dataset: pangu_sft
+dataset: retool_sft
 template: deepseekr1
 cutoff_len: 20480
 max_samples: 10000

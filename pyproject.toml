@@ -84,12 +84,4 @@ conflicts = [
         { extra = "torch-npu" },
         { extra = "vllm" },
     ],
-    [
-        { extra = "torch-npu" },
-        { extra = "sglang" },
-    ],
-    [
-        { extra = "vllm" },
-        { extra = "sglang" },
-    ],
 ]

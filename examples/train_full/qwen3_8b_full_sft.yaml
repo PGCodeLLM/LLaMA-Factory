@@ -9,15 +9,15 @@ finetuning_type: full
 deepspeed: examples/deepspeed/ds_z3_offload_config.json
 
 ### dataset
-dataset: pangu_sft
-template: qwen3
+dataset: retool_sft 
+template: custom_coder
 cutoff_len: 20480
 max_samples: 10000
 overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /shared_workspace_mfs/alex/llama-factory-chkpts/qwen3-8b_7k/full/sft
+output_dir: /shared_workspace_mfs/akki/probe/LLaMA-Factory/checkpoints-qwen3-no-deepseek
 logging_steps: 10
 save_steps: 500
 plot_loss: true

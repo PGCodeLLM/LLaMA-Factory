@@ -226,10 +226,25 @@ class SharegptDatasetConverter(DatasetConverter):
         }
         return output
 
+@dataclass
+class NativeDatasetConverter(DatasetConverter):
+    def __call__(self, example: dict[str, Any]) -> dict[str, Any]:
+        output = {
+            "_prompt": [example["prompt"]],
+            "_response": [example["response"]],
+            "_system": "",
+            "_tools": "",
+            "_images": None,
+            "_videos": None,
+            "_audios": None,
+        }
+        return output
+
 
 DATASET_CONVERTERS = {
     "alpaca": AlpacaDatasetConverter,
     "sharegpt": SharegptDatasetConverter,
+    "native": NativeDatasetConverter,
 }
 
 

@@ -158,7 +158,7 @@ def _load_single_dataset(
     if data_args.max_samples is not None:  # truncate dataset
         max_samples = min(data_args.max_samples, len(dataset))
         dataset = dataset.select(range(max_samples))
-
+    print(f"Loaded {len(dataset)} samples from dataset {dataset_attr}.")
     return align_dataset(dataset, dataset_attr, data_args, training_args)
 
 

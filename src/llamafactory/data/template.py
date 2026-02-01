@@ -452,6 +452,39 @@ class ReasoningTemplate(Template):
 
         return [(encoded_messages[i], encoded_messages[i + 1]) for i in range(0, len(encoded_messages), 2)]
 
+class NativePanguTemplate(Template):
+    r"""A template that add thought to assistant message."""
+
+    @override
+    def encode_oneturn(
+        self,
+        tokenizer: "PreTrainedTokenizer",
+        messages: list[dict[str, str]],
+        system: Optional[str] = None,
+        tools: Optional[str] = None,
+    ) -> tuple[list[int], list[int]]:
+        messages = deepcopy(messages)
+        prompt, response = messages
+        prompt_ids = self._convert_elements_to_ids(tokenizer, prompt)
+        response_ids = self._convert_elements_to_ids(tokenizer, response)
+        return prompt_ids, response_ids
+
+    @override
+    def encode_multiturn(
+        self,
+        tokenizer: "PreTrainedTokenizer",
+        messages: list[dict[str, str]],
+        system: Optional[str] = None,
+        tools: Optional[str] = None,
+    ) -> list[tuple[list[int], list[int]]]:
+        messages = deepcopy(messages)
+        prompt, response = messages
+        prompt_ids = self._convert_elements_to_ids(tokenizer, [prompt])
+        response_ids = self._convert_elements_to_ids(tokenizer, [response])
+        # print(len(prompt), len(response), len(prompt_ids), len(response_ids))
+        return [(prompt_ids, response_ids)]
+
+
 
 TEMPLATES: dict[str, "Template"] = {}
 
@@ -837,6 +870,16 @@ register_template(
     format_prefix=EmptyFormatter(slots=[{"bos_token"}]),
 )
 
+register_template(
+    name="custom_coder",
+    format_user=StringFormatter(slots=[
+        "Solve the following problem step by step. You now have the ability to selectively write executable Python code to enhance your reasoning process. The Python code will be executed by an external sandbox, and the output (wrapped in `<interpreter>output_str</interpreter>`) can be returned to aid your reasoning and help you arrive at the final answer. The Python code should be complete scripts, including necessary imports. \nEach code snippet is wrapped with `<code>\n```python\ncode snippet\n```\n</code>`.\nThe last part of your response should be in the following format:\n<answer>\n\\boxed{{'The final answer goes here.'}}\n</answer>\n\n*user question:*\n{{content}}\n\nRemember to place the final answer in the last part using the format: \n<answer>\n\\boxed{{'The final answer goes here.'}}\n</answer>"
+    ]),
+    format_assistant=StringFormatter(slots=[
+        "{{content}}" # This is where the model's full response, including code and interpreter output, goes
+    ])
+    # template_class=ReasoningTemplate # Or a new custom class that extends ReasoningTemplate
+)
 
 register_template(
     name="deepseek3",
@@ -1862,4 +1905,23 @@ register_template(
     name="ziya",
     format_user=StringFormatter(slots=["<human>:{{content}}\n<bot>:"]),
     format_assistant=StringFormatter(slots=["{{content}}\n"]),
+)
+
+register_template(
+    name="pangu",
+    format_user=StringFormatter(slots=["[unused9]用户：{{content}}[unused10]"]),
+    format_assistant=StringFormatter(slots=["[unused9]助手：{{content}}[unused10]"]),
+    format_system=StringFormatter(slots=["[unused9]系统：{{content}}[unused10]"]),
+    format_function=StringFormatter(slots=["[unused9]方法：{{content}}[unused10]"]),
+    format_observation=StringFormatter(slots=["[unused9]工具：{{content}}[unused10]"]),
+    stop_words=["[unused10]"],
+    replace_eos=True,
+    template_class=ReasoningTemplate,
+)
+
+register_template(
+    name="pangu_tir",
+    stop_words=["[unused10]"],
+    replace_eos=True,
+    template_class=NativePanguTemplate,
 )

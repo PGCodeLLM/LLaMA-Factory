@@ -145,6 +145,24 @@
       "assistant_tag": "assistant"
     }
   },
+
+"retool_sft": {
+  "hf_hub_url": "JoeYing/ReTool-SFT",
+  "num_samples": 2000,
+  "formatting": "sharegpt",
+  "columns": {
+    "messages": "messages"
+  },
+  "tags": {
+    "role_tag": "role",
+    "content_tag": "content",
+    "system_tag": "system",
+    "user_tag": "user",
+    "assistant_tag": "assistant"
+  }
+},
+
+
   "identity": {
     "file_name": "identity.json"
   },
@@ -860,5 +878,47 @@
       "prompt": "content"
     },
     "folder": "python"
+  },
+
+  "custom_qwen32B_distills": {
+    "file_name": "/shared_workspace_mfs/akki/dataset/converted_dataset.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "conversations"
+    },
+    "tags": {
+      "role_tag": "from",
+      "content_tag": "value",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  },
+"pangu_dataset": {
+  "file_name": "/shared_workspace_mfs/akki/probe/pangu_data_mixture/output.jsonl",
+  "formatting": "sharegpt",
+  "columns": {
+    "messages": "data"
+  },
+  "tags": {
+    "role_tag": "role",
+    "content_tag": "content",
+    "user_tag": "user",
+    "assistant_tag": "assistant",
+    "system_tag": "meta_prompt"
   }
+},
+
+"pangu_tir": {
+  "file_name": "/shared_workspace_mfs/yanruo/repo/TIR/TIR-Benchmark/dataset/ReTool-Qwen-32B-T0.6.jsonl",
+  "formatting": "native",
+  "columns": {
+    "prompt": "prompt",
+    "response": "response"
+  }
+}
+
+
+
+
 }
